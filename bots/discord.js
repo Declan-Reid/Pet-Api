@@ -1,4 +1,4 @@
-import { REST, Routes, Client, Events, GatewayIntentBits, InteractionContextType, ApplicationIntegrationType, SlashCommandBuilder } from 'discord.js';
+import { REST, Routes, Client, Events, GatewayIntentBits, InteractionContextType, ApplicationIntegrationType, SlashCommandBuilder, ActivityType } from 'discord.js';
 import dotenv from 'dotenv';
 import petPetGif from '@someaspy/pet-pet-gif';
 import sharp from 'sharp';
@@ -45,7 +45,14 @@ try {
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds],
-    
+	presence: {
+		status: 'online',
+		activities: [{
+			name: 'Petting things :3',
+			type: ActivityType.Custom,
+			state: ''
+		}],
+	},
 });
 
 client.on(Events.ClientReady, readyClient => {
