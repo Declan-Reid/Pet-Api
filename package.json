@@ -13,6 +13,7 @@
     "@someaspy/pet-pet-gif": "^2.0.6",
     "discord.js": "^14.23.2",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "sharp": "^0.34.4"
   }
 }
