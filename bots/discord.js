@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import petPetGif from '@someaspy/pet-pet-gif';
 import sharp from 'sharp';
 
-dotenv.config();
+dotenv.config({ quiet: true });
 import express from 'express';
 const router = express.Router();
 
