@@ -18,7 +18,7 @@ const commands = [
 		.setDescription('Select a member and pet them.')
 		.addUserOption((option) => option.setName('target').setDescription('The member to pet'))
 		.setIntegrationTypes(ApplicationIntegrationType.UserInstall)
-		.setContexts(InteractionContextType.PrivateChannel),
+		.setContexts([InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel]),
 ];
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
@@ -50,9 +50,9 @@ client.on(Events.InteractionCreate, async interaction => {
 		// Check if a user was provided
 		if (interaction.options.getUser('target')) {
 			const target = interaction.options.getUser('target');
-			await interaction.reply(process.env.WEBSITE_URL + 'discord/' + target.id);
+			await interaction.reply(process.env.WEBSITE_URL + 'discord/' + target.id + ".gif");
 		} else {
-			await interaction.reply(process.env.WEBSITE_URL + 'discord/' + interaction.user.id);
+			await interaction.reply(process.env.WEBSITE_URL + 'discord/' + interaction.user.id + ".gif");
 		}
   	}
 });
