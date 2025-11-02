@@ -67,8 +67,10 @@ client.on(Events.InteractionCreate, async interaction => {
 		// Check if a user was provided
 		if (interaction.options.getUser('target')) {
 			const target = interaction.options.getUser('target');
+			console.log(`[Discord] ${interaction.user.tag} is petting ${target.tag}`);
 			await interaction.reply(process.env.WEBSITE_URL + 'discord/' + target.id + ".gif");
 		} else {
+			console.log(`[Discord] ${interaction.user.tag} is petting themselves`);
 			await interaction.reply(process.env.WEBSITE_URL + 'discord/' + interaction.user.id + ".gif");
 		}
 		return;
@@ -76,8 +78,8 @@ client.on(Events.InteractionCreate, async interaction => {
 
 	if (interaction.commandName === 'pet-image')
 	{
-		console.log('pet-image command invoked');
 		const url = interaction.options.getString('url');
+		console.log(`[Discord] ${interaction.user.tag} is petting an image: ${url}`);
 
 		// Fetch the image and convert it to a PNG buffer to ensure canvas supports it
 		let imageBuffer;

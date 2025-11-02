@@ -21,18 +21,17 @@ app.get('/discord/:id.gif', async (req, res) => {
     const userId = req.params.id;
     try {
         const user = await client.users.fetch(userId);
-        // console.log(user);
+        console.log(`[Website] Fetched: discord user ${user.tag} (${user.id})`);
 
         // Now we pet their pfp
         const avatarUrl = user.displayAvatarURL({ extension: 'png', size: 512 });
-        // console.log(avatarUrl, typeof avatarUrl);
         const petGif = await petPetGif(avatarUrl);
 
         // Now we respond with the gif
         res.setHeader('Content-Type', 'image/gif');
         res.send(petGif);
     } catch (error) {
-        console.log(error)
+        console.error(`[Website] Error fetching: Discord user (${userId})`, error);
         res.status(404).json({ error: 'User not found, probably...' });
         return;
     }
