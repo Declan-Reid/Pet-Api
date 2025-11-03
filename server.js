@@ -20,13 +20,13 @@ app.get('/discord/:id.gif', async (req, res) => {
     const userId = req.params.id;
     const frame_length = req.query.frame_length ? parseInt(req.query.frame_length) : 20;
     const circle = req.query.circle === 'true';
-    console.log(`[Website] Debug: ${userId} | frame_length=${frame_length} | circle=${circle}`);
     try {
         const user = await client.users.fetch(userId);
         console.log(`[Website] Fetched: discord user ${user.tag} (${user.id})`);
 
         // Now we pet their pfp
         const avatarUrl = user.displayAvatarURL({ extension: 'png', size: 512 });
+    console.log(`[Website] Debug: ${userId} | frame_length=${frame_length} | circle=${circle} | avatarUrl=${avatarUrl}`);
         const petGif = await petPetGif(avatarUrl, { delay: frame_length, circle: circle });
 
         // Now we respond with the gif
