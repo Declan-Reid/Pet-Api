@@ -14,7 +14,7 @@ const commands = [
 		.setName('pet')
 		.setDescription('Select a member and pet them.')
 		.addUserOption((option) => option.setName('target').setDescription('The member to pet'))
-		.addIntegerOption((option) => option.setName('frame_length').setDescription('The length of the petting animation in frames (default 20)').setMinValue(1).setMaxValue(100))
+		.addIntegerOption((option) => option.setName('frame_length').setDescription('The length of the petting animation in frames (default 20)').setMinValue(10).setMaxValue(655360))
 		.addBooleanOption((option) => option.setName('circle').setDescription('Whether to use a circular petting animation (default false)'))
 		.setIntegrationTypes(ApplicationIntegrationType.UserInstall)
 		.setContexts([InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel]),
