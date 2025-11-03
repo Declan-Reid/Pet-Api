@@ -14,7 +14,7 @@ const commands = [
 		.setName('pet')
 		.setDescription('Select a member and pet them.')
 		.addUserOption((option) => option.setName('target').setDescription('The member to pet'))
-		.addIntegerOption((option) => option.setName('delay').setDescription('The duration between each frame (default 20)').setMinValue(10).setMaxValue(655360))
+		.addIntegerOption((option) => option.setName('delay').setDescription('The duration between each frame (default 20)').setMinValue(15).setMaxValue(655360))
 		.addBooleanOption((option) => option.setName('circle').setDescription('Whether to use a circular petting animation (default false)'))
 		.setIntegrationTypes(ApplicationIntegrationType.UserInstall)
 		.setContexts([InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel]),
@@ -23,7 +23,7 @@ const commands = [
 		.setName('pet-image')
 		.setDescription('Provide an image url and pet it.')
 		.addStringOption((option) => option.setName('url').setDescription('The url of the image to pet').setRequired(true))
-		.addIntegerOption((option) => option.setName('delay').setDescription('The duration between each frame (default 20)').setMinValue(10).setMaxValue(655360))
+		.addIntegerOption((option) => option.setName('delay').setDescription('The duration between each frame (default 20)').setMinValue(15).setMaxValue(655360))
 		.addBooleanOption((option) => option.setName('circle').setDescription('Whether to use a circular petting animation (default false)'))
 		.setIntegrationTypes(ApplicationIntegrationType.UserInstall)
 		.setContexts([InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel]),
