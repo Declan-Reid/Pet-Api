@@ -19,7 +19,7 @@ const commands = [
 		.setName('pet')
 		.setDescription('Select a member and pet them.')
 		.addUserOption((option) => option.setName('target').setDescription('The member to pet'))
-		.addIntegerOption((option) => option.setName('frameLength').setDescription('The length of the petting animation in frames (default 20)').setMinValue(1).setMaxValue(100))
+		.addIntegerOption((option) => option.setName('frame_length').setDescription('The length of the petting animation in frames (default 20)').setMinValue(1).setMaxValue(100))
 		.addBooleanOption((option) => option.setName('circle').setDescription('Whether to use a circular petting animation (default false)'))
 		.setIntegrationTypes(ApplicationIntegrationType.UserInstall)
 		.setContexts([InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel]),
@@ -28,7 +28,7 @@ const commands = [
 		.setName('pet-image')
 		.setDescription('Provide an image url and pet it.')
 		.addStringOption((option) => option.setName('url').setDescription('The url of the image to pet').setRequired(true))
-		.addIntegerOption((option) => option.setName('frameLength').setDescription('The length of the petting animation in frames (default 20)').setMinValue(1).setMaxValue(100))
+		.addIntegerOption((option) => option.setName('frame_length').setDescription('The length of the petting animation in frames (default 20)').setMinValue(1).setMaxValue(100))
 		.addBooleanOption((option) => option.setName('circle').setDescription('Whether to use a circular petting animation (default false)'))
 		.setIntegrationTypes(ApplicationIntegrationType.UserInstall)
 		.setContexts([InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel]),
@@ -69,11 +69,11 @@ client.on(Events.InteractionCreate, async interaction => {
   	if (interaction.commandName === 'pet')
 	{
 		let urlOptions = '';
-		if (interaction.options.getInteger('frameLength') || interaction.options.getBoolean('circle')) {
+		if (interaction.options.getInteger('frame_length') || interaction.options.getBoolean('circle')) {
 			urlOptions += '?';
 			const params = [];
-			if (interaction.options.getInteger('frameLength')) {
-				params.push(`speed=${interaction.options.getInteger('frameLength')}`);
+			if (interaction.options.getInteger('frame_length')) {
+				params.push(`speed=${interaction.options.getInteger('frame_length')}`);
 			}
 			if (interaction.options.getBoolean('circle')) {
 				params.push(`circle=true`);
@@ -126,7 +126,7 @@ client.on(Events.InteractionCreate, async interaction => {
 			const pettedImageBuffer = await petPetGif(
 				imageBuffer,
 				{
-					frameLength: interaction.options.getInteger('frameLength') || 20,
+					frameLength: interaction.options.getInteger('frame_length') || 20,
 					circle: interaction.options.getBoolean('circle') || false,
 				}
 			);
