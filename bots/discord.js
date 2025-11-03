@@ -68,7 +68,7 @@ client.on(Events.InteractionCreate, async interaction => {
 			urlOptions += '?';
 			const params = [];
 			if (interaction.options.getInteger('frame_length')) {
-				params.push(`speed=${interaction.options.getInteger('frame_length')}`);
+				params.push(`frame_length=${interaction.options.getInteger('frame_length')}`);
 			}
 			if (interaction.options.getBoolean('circle')) {
 				params.push(`circle=true`);
