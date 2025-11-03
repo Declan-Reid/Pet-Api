@@ -19,6 +19,8 @@ const commands = [
 		.setName('pet')
 		.setDescription('Select a member and pet them.')
 		.addUserOption((option) => option.setName('target').setDescription('The member to pet'))
+		.addIntegerOption((option) => option.setName('frameLength').setDescription('The length of the petting animation in frames (default 20)').setMinValue(1).setMaxValue(100))
+		.addBooleanOption((option) => option.setName('circle').setDescription('Whether to use a circular petting animation (default false)'))
 		.setIntegrationTypes(ApplicationIntegrationType.UserInstall)
 		.setContexts([InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel]),
 
@@ -26,6 +28,8 @@ const commands = [
 		.setName('pet-image')
 		.setDescription('Provide an image url and pet it.')
 		.addStringOption((option) => option.setName('url').setDescription('The url of the image to pet').setRequired(true))
+		.addIntegerOption((option) => option.setName('frameLength').setDescription('The length of the petting animation in frames (default 20)').setMinValue(1).setMaxValue(100))
+		.addBooleanOption((option) => option.setName('circle').setDescription('Whether to use a circular petting animation (default false)'))
 		.setIntegrationTypes(ApplicationIntegrationType.UserInstall)
 		.setContexts([InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel]),
 ];
@@ -64,14 +68,27 @@ client.on(Events.InteractionCreate, async interaction => {
 
   	if (interaction.commandName === 'pet')
 	{
+		let urlOptions = '';
+		if (interaction.options.getInteger('frameLength') || interaction.options.getBoolean('circle')) {
+			urlOptions += '?';
+			const params = [];
+			if (interaction.options.getInteger('frameLength')) {
+				params.push(`speed=${interaction.options.getInteger('frameLength')}`);
+			}
+			if (interaction.options.getBoolean('circle')) {
+				params.push(`circle=true`);
+			}
+			urlOptions += params.join('&');
+		}
+
 		// Check if a user was provided
 		if (interaction.options.getUser('target')) {
 			const target = interaction.options.getUser('target');
 			console.log(`[Discord] ${interaction.user.tag} is petting ${target.tag}`);
-			await interaction.reply(process.env.WEBSITE_URL + 'discord/' + target.id + ".gif");
+			await interaction.reply(process.env.WEBSITE_URL + 'discord/' + target.id + ".gif" + urlOptions);
 		} else {
 			console.log(`[Discord] ${interaction.user.tag} is petting themselves`);
-			await interaction.reply(process.env.WEBSITE_URL + 'discord/' + interaction.user.id + ".gif");
+			await interaction.reply(process.env.WEBSITE_URL + 'discord/' + interaction.user.id + ".gif" + urlOptions);
 		}
 		return;
   	}
@@ -104,10 +121,15 @@ client.on(Events.InteractionCreate, async interaction => {
 			await interaction.reply({ content: 'Error fetching or processing the image. Please ensure the URL is valid and points to a supported image format (png/jpg/gif/webp).' });
 			return;
 		}
-
 			// Reply with the petted image as an attachment
 		try {
-			const pettedImageBuffer = await petPetGif(imageBuffer);
+			const pettedImageBuffer = await petPetGif(
+				imageBuffer,
+				{
+					frameLength: interaction.options.getInteger('frameLength') || 20,
+					circle: interaction.options.getBoolean('circle') || false,
+				}
+			);
 
 			// Reply with the petted image as an attachment
 			await interaction.reply({

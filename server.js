@@ -16,16 +16,18 @@ app.get('/bot', async (req, res) => {
     res.send(`Bot is logged in as ${client.user.tag}`);
 });
 
-
+// TODO: Support query parameters for frame length and circle
 app.get('/discord/:id.gif', async (req, res) => {
     const userId = req.params.id;
+    const frameLength = req.query.speed ? parseInt(req.query.speed) : 20;
+    const circle = req.query.circle === 'true';
     try {
         const user = await client.users.fetch(userId);
         console.log(`[Website] Fetched: discord user ${user.tag} (${user.id})`);
 
         // Now we pet their pfp
         const avatarUrl = user.displayAvatarURL({ extension: 'png', size: 512 });
-        const petGif = await petPetGif(avatarUrl);
+        const petGif = await petPetGif(avatarUrl, { frameLength: frameLength, circle: circle });
 
         // Now we respond with the gif
         res.setHeader('Content-Type', 'image/gif');
