@@ -18,7 +18,7 @@ app.get('/bot', async (req, res) => {
 
 app.get('/discord/:id.gif', async (req, res) => {
     const userId = req.params.id;
-    const frame_length = req.query.frame_length ? parseInt(req.query.frame_length) : 20;
+    const delay = req.query.delay ? parseInt(req.query.delay) : 20;
     const circle = req.query.circle === 'true';
     try {
         const user = await client.users.fetch(userId);
@@ -26,8 +26,8 @@ app.get('/discord/:id.gif', async (req, res) => {
 
         // Now we pet their pfp
         const avatarUrl = user.displayAvatarURL({ extension: 'png', size: 512 });
-        console.log(`[Website] Debug: ${userId} | frame_length=${frame_length} | circle=${circle} | avatarUrl=${avatarUrl}`);
-        const petGif = await petPetGif(avatarUrl, { resolution: 128, delay: frame_length, backgroundColor: null });
+        console.log(`[Website] Debug: ${userId} | delay=${delay} | circle=${circle} | avatarUrl=${avatarUrl}`);
+        const petGif = await petPetGif(avatarUrl, { resolution: 128, delay: delay, backgroundColor: null });
 
         // Now we respond with the gif
         res.setHeader('Content-Type', 'image/gif');

@@ -14,7 +14,7 @@ const commands = [
 		.setName('pet')
 		.setDescription('Select a member and pet them.')
 		.addUserOption((option) => option.setName('target').setDescription('The member to pet'))
-		.addIntegerOption((option) => option.setName('frame_length').setDescription('The length of the petting animation in frames (default 20)').setMinValue(10).setMaxValue(655360))
+		.addIntegerOption((option) => option.setName('delay').setDescription('The duration between each frame (default 20)').setMinValue(10).setMaxValue(655360))
 		.addBooleanOption((option) => option.setName('circle').setDescription('Whether to use a circular petting animation (default false)'))
 		.setIntegrationTypes(ApplicationIntegrationType.UserInstall)
 		.setContexts([InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel]),
@@ -23,7 +23,7 @@ const commands = [
 		.setName('pet-image')
 		.setDescription('Provide an image url and pet it.')
 		.addStringOption((option) => option.setName('url').setDescription('The url of the image to pet').setRequired(true))
-		.addIntegerOption((option) => option.setName('frame_length').setDescription('The length of the petting animation in frames (default 20)').setMinValue(1).setMaxValue(100))
+		.addIntegerOption((option) => option.setName('delay').setDescription('The duration between each frame (default 20)').setMinValue(10).setMaxValue(655360))
 		.addBooleanOption((option) => option.setName('circle').setDescription('Whether to use a circular petting animation (default false)'))
 		.setIntegrationTypes(ApplicationIntegrationType.UserInstall)
 		.setContexts([InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel]),
@@ -64,11 +64,11 @@ client.on(Events.InteractionCreate, async interaction => {
   	if (interaction.commandName === 'pet')
 	{
 		let urlOptions = '';
-		if (interaction.options.getInteger('frame_length') || interaction.options.getBoolean('circle')) {
+		if (interaction.options.getInteger('delay') || interaction.options.getBoolean('circle')) {
 			urlOptions += '?';
 			const params = [];
-			if (interaction.options.getInteger('frame_length')) {
-				params.push(`frame_length=${interaction.options.getInteger('frame_length')}`);
+			if (interaction.options.getInteger('delay')) {
+				params.push(`delay=${interaction.options.getInteger('delay')}`);
 			}
 			if (interaction.options.getBoolean('circle')) {
 				params.push(`circle=true`);
@@ -122,7 +122,7 @@ client.on(Events.InteractionCreate, async interaction => {
 				imageBuffer,
 				{
 					resolution: 128,
-					delay: interaction.options.getInteger('frame_length') || 20,
+					delay: interaction.options.getInteger('delay') || 20,
 					backgroundColor: null,
 				}
 			);
