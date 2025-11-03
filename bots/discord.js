@@ -4,14 +4,9 @@ import petPetGif from '@someaspy/pet-pet-gif';
 import sharp from 'sharp';
 
 dotenv.config({ quiet: true });
-import express from 'express';
-const router = express.Router();
 
 const TOKEN = process.env.DISCORD_BOT_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
-
-
-
 
 
 const commands = [
@@ -126,8 +121,9 @@ client.on(Events.InteractionCreate, async interaction => {
 			const pettedImageBuffer = await petPetGif(
 				imageBuffer,
 				{
-					frameLength: interaction.options.getInteger('frame_length') || 20,
-					circle: interaction.options.getBoolean('circle') || false,
+					resolution: 128,
+					delay: interaction.options.getInteger('frame_length') || 20,
+					backgroundColor: null,
 				}
 			);
 

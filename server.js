@@ -26,8 +26,8 @@ app.get('/discord/:id.gif', async (req, res) => {
 
         // Now we pet their pfp
         const avatarUrl = user.displayAvatarURL({ extension: 'png', size: 512 });
-    console.log(`[Website] Debug: ${userId} | frame_length=${frame_length} | circle=${circle} | avatarUrl=${avatarUrl}`);
-        const petGif = await petPetGif(avatarUrl, { delay: frame_length, circle: circle });
+        console.log(`[Website] Debug: ${userId} | frame_length=${frame_length} | circle=${circle} | avatarUrl=${avatarUrl}`);
+        const petGif = await petPetGif(avatarUrl, { resolution: 128, delay: frame_length, backgroundColor: null });
 
         // Now we respond with the gif
         res.setHeader('Content-Type', 'image/gif');
